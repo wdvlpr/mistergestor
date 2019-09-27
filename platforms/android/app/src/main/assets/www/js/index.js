@@ -19,18 +19,42 @@
 var app = {
     // Application Constructor
     initialize: function() {
+        /*
         document.addEventListener('deviceready', function () {
-            cordova.plugins.notification.badge.hasPermission(function (granted) {
-                alert('oi1');
-            });
-            cordova.plugins.notification.badge.set(10);
-            cordova.plugins.notification.badge.increase(1, function (badge) {
-                alert('oi2');
-            });
-            cordova.plugins.notification.badge.configure({ indicator: 'circular' });
+            //cordova.plugins.notification.badge.hasPermission(function (granted) {
+            //    alert('oi1');
+            //});
+            //cordova.plugins.notification.badge.set(10);
+            //cordova.plugins.notification.badge.increase(1, function (badge) {
+            //    alert('oi2');
+            //});
+            //cordova.plugins.notification.badge.configure({ indicator: 'circular' });
             // cordova.plugins.notification.badge is now available
         }, false);
+        */
+        document.getElementById("btnEntrar").addEventListener("click", this.entrar, false);
         //document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+    },
+    entrar: function() {
+        alert('Entrou!');
+        var username = $("#username").val();
+        var password = $("#password").val();
+        
+        $.ajax
+        ({
+          type: "GET",
+          url: "http://192.168.0.202:8030/WsPhp/login.php",
+          dataType: 'json',
+          headers: {
+            "Authorization": "Basic " + btoa(username + ":" + password)
+          },
+          data: '{ "comment" }',
+          success: function (data){
+            alert('RESULT:'+data); 
+          }
+        });
+
+        //this.receivedEvent('deviceready');
     },
 
     // deviceready Event Handler
@@ -57,3 +81,23 @@ var app = {
 };
 
 app.initialize();
+/*
+function auth(){
+    var username = $("#username").val();
+    var password = $("#password").val();
+
+    $.ajax
+    ({
+      type: "GET",
+      url: "http://192.168.0.202:8030/WsPhp/login.php",
+      dataType: 'json',
+      headers: {
+        "Authorization": "Basic " + btoa(username + ":" + password)
+      },
+      data: '{ "comment" }',
+      success: function (data){
+        alert('RESULT: ' + data); 
+      }
+    });
+}
+*/
