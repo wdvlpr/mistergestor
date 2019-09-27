@@ -1,6 +1,8 @@
 var app = {
     initialize: function() {
+        $(".wrapper").hide();
         document.getElementById("btnEntrar").addEventListener("click", this.entrar, false);
+        document.getElementById("btnSair").addEventListener("click", this.sair, false);
     },
     entrar: function() {
       var username = $("#username").val();
@@ -8,19 +10,26 @@ var app = {
       $.ajax
       ({
         type: "GET",
-        url: "http://192.168.0.202:8030/WsPhp/login.php",
-        dataType: 'html',
+        url: "https://app.netseven.com.br/mistergestor/WebService/Operacional.php",
+        dataType: 'json',
         headers: {
           "Authorization": "Basic " + btoa(username + ":" + password)
         },
         data: '{ "comment" }',
         success: function (rows){
-          if(rows == 'ENTROU'){
+          if(rows.situacao == 'A'){
             $(".login-box").hide();
-            $(".painel-box").show();
+            $(".wrapper").show();
+            $("#usuario-nome").html('').html(rows.nome);
           }
         }
       });
+    },
+    sair: function() {
+      $("#username").val('');
+      $("#password").val('');
+      $(".wrapper").hide();
+      $(".login-box").show();
     },
 };
 app.initialize();
