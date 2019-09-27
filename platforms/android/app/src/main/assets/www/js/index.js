@@ -3,7 +3,6 @@ var app = {
         document.getElementById("btnEntrar").addEventListener("click", this.entrar, false);
     },
     entrar: function() {
-      alert("aki");
       var username = $("#username").val();
       var password = $("#password").val();
       $.ajax
